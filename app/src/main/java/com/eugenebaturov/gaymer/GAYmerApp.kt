@@ -1,7 +1,6 @@
-package com.eugenebaturov
+package com.eugenebaturov.gaymer
 
 import android.app.Application
-import com.eugenebaturov.gaymer.DotaRepository
 
 class GAYmerApp: Application() {
 

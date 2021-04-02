@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface HeroApi {
 
-    @GET("./heroStats")
+    @GET("heroes")
     suspend fun getHeroList(): Response<List<Hero>>
 
 }
