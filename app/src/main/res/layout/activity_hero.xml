@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activities.HeroActivity">
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_hero_to_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_menu_favorite"
+        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        app:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/hero_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:src="@drawable/ic_hero_default" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hero_avatar"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:textSize="@dimen/text_size_large"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:text="HERO INFO"
+            android:textAlignment="center" />
+
+        <TextView
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/black"
+            android:id="@+id/hero_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:text="@string/hero_name"
+            android:textAlignment="center" />
+
+        <TextView
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/black"
+            android:id="@+id/hero_attribute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/primary_attribute"
+            android:textAlignment="center" />
+
+        <TextView
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/black"
+            android:id="@+id/hero_attack_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/attack_type"
+            android:textAlignment="center" />
+
+        <TextView
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/black"
+            android:id="@+id/hero_role"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/role"
+            android:textAlignment="center" />
+
+
+        <TextView
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/characteristic"
+            android:textAlignment="center" />
+
+        <TextView
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="Damage" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textSize="@dimen/text_size_normal"
+                android:textColor="@color/black"
+                android:id="@+id/hero_minDamage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="@string/min_damage"
+                android:textAlignment="center" />
+
+            <TextView
+                android:textSize="@dimen/text_size_normal"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/minus" />
+
+            <TextView
+                android:textSize="@dimen/text_size_normal"
+                android:textColor="@color/black"
+                android:id="@+id/hero_maxDamage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/max_damage"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <TextView
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="@string/health_point" />
+
+        <TextView
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textSize="@dimen/text_size_normal"
+            android:id="@+id/hero_health"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/hp_background"
+            android:text="@string/health"
+            android:textAlignment="center"
+            android:textColor="@color/hp_text" />
+
+        <TextView
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="@string/mana_point" />
+
+        <TextView
+            android:textSize="@dimen/text_size_normal"
+            android:id="@+id/hero_mana"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:background="@color/mp_background"
+            android:text="@string/mana"
+            android:textAlignment="center"
+            android:textColor="@color/mp_text" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/agi"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/intelect"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/count"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

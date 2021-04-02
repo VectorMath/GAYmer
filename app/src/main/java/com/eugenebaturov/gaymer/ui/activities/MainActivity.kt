@@ -1,7 +1,8 @@
-package com.eugenebaturov.gaymer
+package com.eugenebaturov.gaymer.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.eugenebaturov.gaymer.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

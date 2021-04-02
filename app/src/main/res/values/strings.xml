@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">GAYmer</string>
+    <string name="hero_name">Hero name</string>
+    <string name="role">Role</string>
+    <string name="about_gaymer_slogan">GAYmer - mobile app for Dota 2 players</string>
+    <string name="rating">Rating</string>
+    <string name="team_name">Team name</string>
+    <string name="attack_type">Attack Type</string>
+    <string name="primary_attribute">Primary attribute</string>
+    <string name="characteristic">CHARACTERISTIC</string>
+    <string name="min_damage">Min Damage</string>
+    <string name="max_damage">Max Damage</string>
+    <string name="minus">-</string>
+    <string name="health">Health</string>
+    <string name="mana">Mana</string>
+    <string name="health_point">Health point</string>
+    <string name="mana_point">Mana point</string>
+    <string name="str">STR</string>
+    <string name="agi">AGI</string>
+    <string name="intelect">INT</string>
+    <string name="count">count</string>
+    <string name="raiting">Raiting</string>
+    <string name="lose">Lose</string>
+    <string name="wins">Wins</string>
 </resources>
