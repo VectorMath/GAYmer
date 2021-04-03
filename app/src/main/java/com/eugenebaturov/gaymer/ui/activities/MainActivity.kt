@@ -1,5 +1,6 @@
 package com.eugenebaturov.gaymer.ui.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,11 +13,12 @@ import com.eugenebaturov.gaymer.ui.fragments.AboutFragment
 import com.eugenebaturov.gaymer.ui.fragments.FavoriteListFragment
 import com.eugenebaturov.gaymer.ui.fragments.HeroListFragment
 import com.eugenebaturov.gaymer.ui.fragments.TeamListFragment
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_TEAM_ID
 import com.eugenebaturov.gaymer.viewmodels.hero.HeroListViewModel
 import com.eugenebaturov.gaymer.viewmodels.hero.HeroListViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TeamListFragment.Callbacks {
 
     private lateinit var navMenu: BottomNavigationView
 
@@ -53,10 +55,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onTeamSelected(id: Int) {
+        val intent = Intent(this, TeamActivity::class.java)
+        intent.putExtra(KEY_TEAM_ID, id)
+        startActivity(intent)
+    }
+
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.currentFragment, fragment)
             .commit()
     }
+
+
 }

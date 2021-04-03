@@ -15,6 +15,9 @@ class DotaRepository private constructor(context: Context) {
     suspend fun getTeamList(): Response<List<Team>> =
         RetrofitInstance.teamApi.getTeamList()
 
+    suspend fun getTeam(id: Int): Response<Team> =
+        RetrofitInstance.teamApi.getTeam(id)
+
     companion object {
         private var INSTANCE: DotaRepository? = null
 

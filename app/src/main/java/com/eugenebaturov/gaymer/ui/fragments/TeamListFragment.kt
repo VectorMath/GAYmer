@@ -1,5 +1,6 @@
 package com.eugenebaturov.gaymer.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,7 +31,18 @@ class TeamListFragment : Fragment() {
     private lateinit var viewModel: TeamListViewModel
     private lateinit var viewModelFactory: TeamListViewModelFactory
 
+    private var callbacks: Callbacks? = null
+
     private val manager = GridLayoutManager(context, 3)
+
+    interface Callbacks {
+        fun onTeamSelected(id: Int)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +64,6 @@ class TeamListFragment : Fragment() {
         viewModel.myResponse.observe(this, Observer { response ->
             if (response.isSuccessful) {
                 val teams = response.body()!!
-                Log.d("TEAM", teams[4].logoUrl)
                 setAdapter(teams)
             } else {
                 Log.e(Constants.TAG_RESPONSE, response.errorBody().toString())
@@ -62,7 +73,18 @@ class TeamListFragment : Fragment() {
         return view
     }
 
-    private inner class TeamHolder(view: View) : RecyclerView.ViewHolder(view) {
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+    }
+
+    private inner class TeamHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        private lateinit var team: Team
 
         val teamLogoImageView: ImageView = itemView.findViewById(R.id.team_logo)
         val titleTextView: TextView = itemView.findViewById(R.id.team_name)
@@ -70,18 +92,24 @@ class TeamListFragment : Fragment() {
 
         fun bind(team: Team) {
 
-            if (team.logoUrl == null) {
+            this.team = team
+
+            if (this.team.logoUrl == null) {
                 teamLogoImageView.setImageResource(R.drawable.team_unknown)
             } else {
-                Picasso.get().load(team.logoUrl).into(teamLogoImageView)
+                Picasso.get().load(this.team.logoUrl).into(teamLogoImageView)
             }
 
-            if (team.teamName == "") {
+            if (this.team.teamName == "") {
                 titleTextView.setText(R.string.unknown_team)
             } else {
-                titleTextView.text = team.teamName
+                titleTextView.text = this.team.teamName
             }
-            ratingTextView.text = team.rating.toString()
+            ratingTextView.text = this.team.rating.toString()
+        }
+
+        override fun onClick(v: View?) {
+            callbacks?.onTeamSelected(team.id)
         }
     }
 

@@ -9,5 +9,7 @@ class Constants {
         val REPOSITORY_ERROR_MESSAGE = "DotaRepository must be initialized"
         val TAG_SUCCESS = "Success!"
         val TAG_RESPONSE = "Response:"
+
+        val KEY_TEAM_ID = "teamId"
     }
 }

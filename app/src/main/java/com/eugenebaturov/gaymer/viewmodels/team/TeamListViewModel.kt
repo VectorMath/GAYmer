@@ -11,11 +11,19 @@ import retrofit2.Response
 class TeamListViewModel(private val repository: DotaRepository): ViewModel() {
 
     val myResponse: MutableLiveData<Response<List<Team>>> = MutableLiveData()
+    val currentTeamResponse: MutableLiveData<Response<Team>> = MutableLiveData()
 
     fun getTeams() {
         viewModelScope.launch {
             val response = repository.getTeamList()
             myResponse.value = response
+        }
+    }
+
+    fun getCurrentTeam(teamId: Int) {
+        viewModelScope.launch {
+            val response = repository.getTeam(teamId)
+            currentTeamResponse.value = response
         }
     }
 }
