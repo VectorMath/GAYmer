@@ -22,6 +22,9 @@ data class Hero(
     @SerializedName(value = "img")
     val urlImage: String,
 
+    @SerializedName(value = "icon")
+    val urlIcon: String,
+
     @SerializedName(value = "base_health")
     val baseHealth: Int,
 
@@ -41,7 +44,7 @@ data class Hero(
     val moveSpeed: Int,
 
     @SerializedName(value = "base_str")
-    val str: Int,
+    var str: Int,
 
     @SerializedName(value = "base_agi")
     val agi: Int,

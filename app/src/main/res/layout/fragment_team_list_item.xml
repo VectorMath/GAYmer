@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:id="@+id/team_rating"
             android:textSize="@dimen/text_size_small"
             android:textColor="@color/black"
             android:layout_marginTop="@dimen/normal_margin"
