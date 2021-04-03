@@ -12,11 +12,10 @@
         android:layout_margin="8dp">
 
         <ImageView
-            android:foreground="@drawable/circle"
             android:src="@drawable/ic_hero_default"
             android:id="@+id/hero_avatar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

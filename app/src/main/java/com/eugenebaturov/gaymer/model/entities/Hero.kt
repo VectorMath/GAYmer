@@ -32,7 +32,7 @@ data class Hero(
     val baseMana: Int,
 
     @SerializedName(value = "base_armor")
-    val baseArmor: Int,
+    val baseArmor: Double,
 
     @SerializedName(value = "base_attack_min")
     val minDamage: Int,

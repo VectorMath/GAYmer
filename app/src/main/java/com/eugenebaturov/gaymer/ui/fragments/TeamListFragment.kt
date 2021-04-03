@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.eugenebaturov.gaymer.DotaRepository
@@ -29,6 +30,8 @@ class TeamListFragment : Fragment() {
     private lateinit var viewModel: TeamListViewModel
     private lateinit var viewModelFactory: TeamListViewModelFactory
 
+    private val manager = GridLayoutManager(context, 3)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,10 +49,10 @@ class TeamListFragment : Fragment() {
 
         viewModel.getTeams()
 
-        viewModel.myResponse.observe(this, Observer {response ->
+        viewModel.myResponse.observe(this, Observer { response ->
             if (response.isSuccessful) {
                 val teams = response.body()!!
-                Log.d("logo", teams[2].logoUrl)
+                Log.d("TEAM", teams[4].logoUrl)
                 setAdapter(teams)
             } else {
                 Log.e(Constants.TAG_RESPONSE, response.errorBody().toString())
@@ -67,8 +70,17 @@ class TeamListFragment : Fragment() {
 
         fun bind(team: Team) {
 
-            Picasso.get().load(team.logoUrl).into(teamLogoImageView)
-            titleTextView.text = team.teamName
+            if (team.logoUrl == null) {
+                teamLogoImageView.setImageResource(R.drawable.team_unknown)
+            } else {
+                Picasso.get().load(team.logoUrl).into(teamLogoImageView)
+            }
+
+            if (team.teamName == "") {
+                titleTextView.setText(R.string.unknown_team)
+            } else {
+                titleTextView.text = team.teamName
+            }
             ratingTextView.text = team.rating.toString()
         }
     }
@@ -92,9 +104,17 @@ class TeamListFragment : Fragment() {
     }
 
     private fun setAdapter(teams: List<Team>) {
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = manager
         recyclerView.hasFixedSize()
         adapter = TeamAdapter(teams)
         recyclerView.adapter = adapter
+    }
+
+    companion object {
+
+        fun newInstance(): TeamListFragment {
+
+            return TeamListFragment()
+        }
     }
 }

@@ -16,4 +16,11 @@ class AboutFragment: Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
+
+    companion object {
+
+        fun newInstance(): AboutFragment {
+            return AboutFragment()
+        }
+    }
 }

@@ -6,10 +6,7 @@ import retrofit2.http.GET
 
 interface HeroApi {
 
-    @GET("HEROES")
+    @GET("heroStats")
     suspend fun getHeroList(): Response<List<Hero>>
 
 }
-
-//https://api.opendota.com/api/heroStats
-//https://api.opendota.com/api/heroes

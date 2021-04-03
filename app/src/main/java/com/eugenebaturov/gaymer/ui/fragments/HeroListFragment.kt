@@ -49,7 +49,7 @@ class HeroListFragment: Fragment() {
         viewModel.myResponse.observe(this, Observer { response ->
             if (response.isSuccessful) {
                 val heroes = response.body()!!
-                Log.d(TAG_SUCCESS, heroes[2].toString()) // Axe
+                Log.d(TAG_SUCCESS, heroes[2].urlImage.toString()) // Axe
                 setAdapter(heroes)
             } else {
                 Log.e(TAG_RESPONSE, response.errorBody().toString())
@@ -75,7 +75,7 @@ class HeroListFragment: Fragment() {
 
             Picasso.get().load(url).into(heroImageView)
             heroName.text = this.hero.name
-            heroRole.text = this.hero.roles[0]
+            heroRole.text = "${this.hero.roles[0]} and ${this.hero.roles.size -1}+"
 
             when(this.hero.attackType) {
 
@@ -123,5 +123,13 @@ class HeroListFragment: Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.hasFixedSize()
         recyclerView.adapter = adapter
+    }
+
+    companion object {
+
+        fun newInstance(): HeroListFragment {
+
+            return HeroListFragment()
+        }
     }
 }

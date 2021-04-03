@@ -22,4 +22,5 @@
     <string name="raiting">Raiting</string>
     <string name="lose">Lose</string>
     <string name="wins">Wins</string>
+    <string name="unknown_team">Unknown Team</string>
 </resources>

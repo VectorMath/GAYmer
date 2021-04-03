@@ -33,10 +33,10 @@ class MainActivity : AppCompatActivity() {
 
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
-                    R.id.menu_heroes -> changeFragment(HeroListFragment())
-                    R.id.menu_teams -> changeFragment(TeamListFragment())
-                    R.id.menu_favorite -> changeFragment(FavoriteListFragment())
-                    R.id.menu_about -> changeFragment(AboutFragment())
+                    R.id.menu_heroes -> changeFragment(HeroListFragment.newInstance())
+                    R.id.menu_teams -> changeFragment(TeamListFragment.newInstance())
+                    R.id.menu_favorite -> changeFragment(FavoriteListFragment.newInstance())
+                    R.id.menu_about -> changeFragment(AboutFragment.newInstance())
                 }
                 true
             }
