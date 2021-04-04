@@ -69,7 +69,11 @@ class TeamActivity : AppCompatActivity() {
     }
 
     private fun updateUI(team: Team) {
-        Picasso.get().load(team.logoUrl).into(logoImageView)
+        if (team.logoUrl != null) {
+            Picasso.get().load(team.logoUrl).into(logoImageView)
+        } else {
+            logoImageView.setImageResource(R.drawable.team_unknown)
+        }
         titleImageView.text = team.teamName
         ratingTextView.text = team.rating.toString()
         winMatchTextView.text = team.winsMatch.toString()

@@ -23,4 +23,5 @@
     <string name="lose">Lose</string>
     <string name="wins">Wins</string>
     <string name="unknown_team">Unknown Team</string>
+    <string name="damage">Damage</string>
 </resources>

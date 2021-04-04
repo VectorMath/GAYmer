@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity(), TeamListFragment.Callbacks {
     override fun onTeamSelected(id: Int) {
         val intent = Intent(this, TeamActivity::class.java)
         intent.putExtra(KEY_TEAM_ID, id)
+
         startActivity(intent)
     }
 
@@ -67,6 +68,4 @@ class MainActivity : AppCompatActivity(), TeamListFragment.Callbacks {
             .replace(R.id.currentFragment, fragment)
             .commit()
     }
-
-
 }

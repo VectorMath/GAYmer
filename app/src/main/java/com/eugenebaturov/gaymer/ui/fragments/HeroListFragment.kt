@@ -1,5 +1,6 @@
 package com.eugenebaturov.gaymer.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.eugenebaturov.gaymer.DotaRepository
 import com.eugenebaturov.gaymer.R
 import com.eugenebaturov.gaymer.model.entities.Hero
+import com.eugenebaturov.gaymer.ui.activities.HeroActivity
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_AGI
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ATTACK_TYPE
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_HEALTH_POINT
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ICON
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ID
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_IMG
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_INT
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_MANA_POINT
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_MAX_DAMAGE
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_MIN_DAMAGE
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_NAME
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_PRM_ATR
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ROLES
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_STR
 import com.eugenebaturov.gaymer.utils.Constants.Companion.TAG_RESPONSE
 import com.eugenebaturov.gaymer.utils.Constants.Companion.TAG_SUCCESS
 import com.eugenebaturov.gaymer.utils.Constants.Companion.URL_FOR_PICASSO
@@ -22,7 +38,7 @@ import com.eugenebaturov.gaymer.viewmodels.hero.HeroListViewModel
 import com.eugenebaturov.gaymer.viewmodels.hero.HeroListViewModelFactory
 import com.squareup.picasso.Picasso
 
-class HeroListFragment: Fragment() {
+class HeroListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: HeroAdapter
@@ -60,7 +76,12 @@ class HeroListFragment: Fragment() {
         return view
     }
 
-    private inner class HeroHolder(view: View): RecyclerView.ViewHolder(view) {
+    private inner class HeroHolder(view: View) : RecyclerView.ViewHolder(view),
+        View.OnClickListener {
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         private lateinit var hero: Hero
 
@@ -71,17 +92,17 @@ class HeroListFragment: Fragment() {
 
         fun bind(hero: Hero) {
             this.hero = hero
-            val url = URL_FOR_PICASSO+this.hero.urlImage
+            val url = URL_FOR_PICASSO + this.hero.urlImage
 
             Picasso.get().load(url).into(heroImageView)
             heroName.text = this.hero.name
-            heroRole.text = "${this.hero.roles[0]} and ${this.hero.roles.size -1}+"
+            heroRole.text = "${this.hero.roles[0]} and ${this.hero.roles.size - 1}+"
 
-            when(this.hero.attackType) {
+            when (this.hero.attackType) {
 
                 "Melee" -> {
 
-                    when(this.hero.primaryAttribute) {
+                    when (this.hero.primaryAttribute) {
                         "str" -> heroClassIcon.setImageResource(R.drawable.ic_str_melee)
                         "agi" -> heroClassIcon.setImageResource(R.drawable.ic_melee)
                         "int" -> heroClassIcon.setImageResource(R.drawable.ic_int_range)
@@ -90,7 +111,7 @@ class HeroListFragment: Fragment() {
 
                 "Ranged" -> {
 
-                    when(this.hero.primaryAttribute) {
+                    when (this.hero.primaryAttribute) {
                         "str" -> heroClassIcon.setImageResource(R.drawable.ic_str_melee)
                         "agi" -> heroClassIcon.setImageResource(R.drawable.ic_range)
                         "int" -> heroClassIcon.setImageResource(R.drawable.ic_int_range)
@@ -98,9 +119,15 @@ class HeroListFragment: Fragment() {
                 }
             }
         }
+
+        override fun onClick(v: View?) {
+            val intent = Intent(context, HeroActivity::class.java)
+            putHeroExtras(intent, hero)
+            startActivity(intent)
+        }
     }
 
-    private inner class HeroAdapter(var heroes: List<Hero>): RecyclerView.Adapter<HeroHolder>() {
+    private inner class HeroAdapter(var heroes: List<Hero>) : RecyclerView.Adapter<HeroHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroHolder {
             val view = layoutInflater.inflate(R.layout.fragment_hero_list_item, parent, false)
@@ -123,6 +150,28 @@ class HeroListFragment: Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.hasFixedSize()
         recyclerView.adapter = adapter
+    }
+
+    private fun putHeroExtras(intent: Intent, hero: Hero) {
+        intent.putExtra(KEY_HERO_ID, hero.id)
+        intent.putExtra(KEY_HERO_NAME, hero.name)
+        intent.putExtra(KEY_HERO_ICON, hero.urlIcon)
+        intent.putExtra(KEY_HERO_IMG, hero.urlImage)
+        intent.putExtra(KEY_HERO_PRM_ATR, hero.primaryAttribute)
+        intent.putExtra(KEY_HERO_ATTACK_TYPE, hero.attackType)
+
+        var roles = ""
+        for (role in hero.roles) {
+            roles += "$role "
+        }
+        intent.putExtra(KEY_HERO_ROLES, roles)
+        intent.putExtra(KEY_HERO_MIN_DAMAGE, hero.minDamage)
+        intent.putExtra(KEY_HERO_MAX_DAMAGE, hero.maxDamage)
+        intent.putExtra(KEY_HERO_MANA_POINT, hero.baseMana)
+        intent.putExtra(KEY_HERO_HEALTH_POINT, hero.baseHealth)
+        intent.putExtra(KEY_HERO_STR, hero.str)
+        intent.putExtra(KEY_HERO_AGI, hero.agi)
+        intent.putExtra(KEY_HERO_INT, hero.int)
     }
 
     companion object {
