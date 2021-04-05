@@ -1,17 +1,24 @@
 package com.eugenebaturov.gaymer.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.eugenebaturov.gaymer.DotaRepository
 import com.eugenebaturov.gaymer.R
+import com.eugenebaturov.gaymer.model.entities.LocalHero
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_AGI
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ATTACK_TYPE
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_HEALTH_POINT
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ICON
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ID
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_IMG
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_INT
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_LOCAL_DB
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_MANA_POINT
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_MAX_DAMAGE
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_MIN_DAMAGE
@@ -20,6 +27,9 @@ import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_PRM_ATR
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ROLES
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_STR
 import com.eugenebaturov.gaymer.utils.Constants.Companion.URL_FOR_PICASSO
+import com.eugenebaturov.gaymer.viewmodels.hero.HeroViewModel
+import com.eugenebaturov.gaymer.viewmodels.hero.HeroViewModelFactory
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 
 class HeroActivity : AppCompatActivity() {
@@ -37,6 +47,8 @@ class HeroActivity : AppCompatActivity() {
     private lateinit var strTextView: TextView
     private lateinit var agiTextView: TextView
     private lateinit var intTextView: TextView
+    private lateinit var fabAdd: FloatingActionButton
+    private lateinit var fabRemove: FloatingActionButton
 
     private lateinit var avatarURL: String
     private lateinit var iconURL: String
@@ -44,6 +56,7 @@ class HeroActivity : AppCompatActivity() {
     private lateinit var attackType: String
     private lateinit var prmAttr: String
     private lateinit var roles: String
+    private var id: Int = 0
     private var minDamage: Int = 0
     private var maxDamage: Int = 0
     private var health: Int = 0
@@ -52,11 +65,23 @@ class HeroActivity : AppCompatActivity() {
     private var agi: Int = 0
     private var int: Int = 0
 
+    private lateinit var viewModel: HeroViewModel
+    private lateinit var viewModelFactory: HeroViewModelFactory
+    private lateinit var hero: LocalHero
+
+    private var isLocal: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hero)
 
+        val repository = DotaRepository.get()
+        viewModelFactory = HeroViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, viewModelFactory)
+            .get(HeroViewModel::class.java)
+
         findViewsById()
+        checkIsLocalDb()
         getInfoAboutHero()
         updateUI()
     }
@@ -74,9 +99,12 @@ class HeroActivity : AppCompatActivity() {
         strTextView = findViewById(R.id.hero_str)
         agiTextView = findViewById(R.id.hero_agi)
         intTextView = findViewById(R.id.hero_int)
+        fabAdd = findViewById(R.id.add_hero_to_favorite)
+        fabRemove = findViewById(R.id.remove_hero_to_favorite)
     }
 
     private fun getInfoAboutHero() {
+        id = intent.getIntExtra(KEY_HERO_ID, 0)
         avatarURL = intent.getStringExtra(KEY_HERO_IMG).toString()
         iconURL = intent.getStringExtra(KEY_HERO_ICON).toString()
         name = intent.getStringExtra(KEY_HERO_NAME).toString()
@@ -93,10 +121,29 @@ class HeroActivity : AppCompatActivity() {
 
         health += 5 * str
         mana += 5 * int
+
+        hero = LocalHero(
+            id = id,
+            name = name,
+            primaryAttribute = prmAttr,
+            attackType = attackType,
+            roles = roles,
+            minDamage = minDamage,
+            maxDamage = maxDamage,
+            baseHealth = health,
+            baseMana = mana,
+            str = str,
+            agi = agi,
+            intHero = int,
+            urlImage = avatarURL,
+            urlIcon = iconURL,
+            baseArmor = 2.5,
+            moveSpeed = 300
+        )
     }
 
     private fun updateUI() {
-        Picasso.get().load(URL_FOR_PICASSO+avatarURL).into(avatarImageView)
+        Picasso.get().load(URL_FOR_PICASSO + avatarURL).into(avatarImageView)
         nameTextView.text = name
         prmAttrTextView.text = prmAttr
         attackTypeTextView.text = attackType
@@ -108,5 +155,26 @@ class HeroActivity : AppCompatActivity() {
         strTextView.text = str.toString()
         agiTextView.text = agi.toString()
         intTextView.text = int.toString()
+    }
+
+    private fun checkIsLocalDb() {
+        isLocal = intent.getBooleanExtra(KEY_HERO_LOCAL_DB, false)
+
+        if (isLocal) {
+            fabAdd.visibility = View.GONE
+            fabRemove.visibility = View.VISIBLE
+        }
+    }
+
+    fun addHero(view: View) {
+        viewModel.insert(hero)
+        Toast.makeText(this, "Hero was added!", Toast.LENGTH_SHORT).show()
+    }
+
+    fun removeHero(view: View) {
+        viewModel.remove(hero)
+        Toast.makeText(this, "Hero was removed!", Toast.LENGTH_SHORT).show()
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        startActivity(intent)
     }
 }

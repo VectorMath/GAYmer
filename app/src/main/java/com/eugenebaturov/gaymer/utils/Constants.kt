@@ -4,6 +4,8 @@ class Constants {
 
     companion object {
 
+        const val DATABASE_NAME = "hero-database"
+
         const val BASE_URL = "https://api.opendota.com/api/"
         const val URL_FOR_PICASSO = "https://api.opendota.com"
         const val REPOSITORY_ERROR_MESSAGE = "DotaRepository must be initialized"
@@ -12,6 +14,7 @@ class Constants {
 
         const val KEY_TEAM_ID = "teamId"
 
+        const val KEY_HERO_LOCAL_DB = "local"
         const val KEY_HERO_ID = "heroId"
         const val KEY_HERO_NAME = "heroName"
         const val KEY_HERO_ICON = "heroIcon"

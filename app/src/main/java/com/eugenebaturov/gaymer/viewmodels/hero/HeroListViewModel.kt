@@ -1,10 +1,9 @@
 package com.eugenebaturov.gaymer.viewmodels.hero
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.eugenebaturov.gaymer.DotaRepository
 import com.eugenebaturov.gaymer.model.entities.Hero
+import com.eugenebaturov.gaymer.model.entities.LocalHero
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -14,6 +13,7 @@ class HeroListViewModel(private val repository: DotaRepository): ViewModel() {
 
     val myResponse: MutableLiveData<Response<List<Hero>>> = MutableLiveData()
 
+    // Coroutines
     fun getHeroes() {
         viewModelScope.launch {
             val response = repository.getHeroList()

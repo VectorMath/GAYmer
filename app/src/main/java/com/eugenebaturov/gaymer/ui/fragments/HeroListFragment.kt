@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.eugenebaturov.gaymer.DotaRepository
 import com.eugenebaturov.gaymer.R
 import com.eugenebaturov.gaymer.model.entities.Hero
+import com.eugenebaturov.gaymer.model.entities.LocalHero
 import com.eugenebaturov.gaymer.ui.activities.HeroActivity
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_AGI
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ATTACK_TYPE
@@ -61,7 +62,6 @@ class HeroListFragment : Fragment() {
             .get(HeroListViewModel::class.java)
 
         viewModel.getHeroes()
-
         viewModel.myResponse.observe(this, Observer { response ->
             if (response.isSuccessful) {
                 val heroes = response.body()!!

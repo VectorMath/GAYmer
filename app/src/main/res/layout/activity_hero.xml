@@ -13,6 +13,19 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_menu_favorite"
         android:layout_margin="16dp"
+        android:onClick="addHero"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        app:tint="@color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/remove_hero_to_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:src="@drawable/ic_baseline_delete_24"
+        android:layout_margin="16dp"
+        android:onClick="removeHero"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         app:tint="@color/white" />
