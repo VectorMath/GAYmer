@@ -2,7 +2,7 @@
     <string name="app_name">GAYmer</string>
     <string name="hero_name">Hero name</string>
     <string name="role">Role</string>
-    <string name="about_gaymer_slogan">GAYmer - mobile app for Dota 2 players</string>
+    <string name="about_gaymer_slogan">In this app you can:</string>
     <string name="rating">Rating</string>
     <string name="team_name">Team name</string>
     <string name="attack_type">Attack Type</string>
