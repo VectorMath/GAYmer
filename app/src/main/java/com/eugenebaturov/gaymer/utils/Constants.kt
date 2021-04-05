@@ -20,6 +20,8 @@ class Constants {
         const val KEY_HERO_ICON = "heroIcon"
         const val KEY_HERO_IMG = "heroImg"
         const val KEY_HERO_PRM_ATR = "heroPrmAtr"
+        const val KEY_HERO_ARMOR = "heroArmor"
+        const val KEY_HERO_SPEED = "heroSpeed"
         const val KEY_HERO_ATTACK_TYPE = "heroAttackType"
         const val KEY_HERO_ROLES = "heroRoles"
         const val KEY_HERO_MIN_DAMAGE = "heroMinDamage"

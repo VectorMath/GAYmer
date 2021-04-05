@@ -18,6 +18,7 @@ import com.eugenebaturov.gaymer.R
 import com.eugenebaturov.gaymer.model.entities.Hero
 import com.eugenebaturov.gaymer.model.entities.LocalHero
 import com.eugenebaturov.gaymer.ui.activities.HeroActivity
+import com.eugenebaturov.gaymer.utils.Constants
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_AGI
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ATTACK_TYPE
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_HEALTH_POINT
@@ -62,6 +63,13 @@ class HeroListFragment : Fragment() {
             .get(HeroListViewModel::class.java)
 
         viewModel.getHeroes()
+
+        return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+
         viewModel.myResponse.observe(this, Observer { response ->
             if (response.isSuccessful) {
                 val heroes = response.body()!!
@@ -73,7 +81,6 @@ class HeroListFragment : Fragment() {
 
         })
 
-        return view
     }
 
     private inner class HeroHolder(view: View) : RecyclerView.ViewHolder(view),
@@ -159,6 +166,8 @@ class HeroListFragment : Fragment() {
         intent.putExtra(KEY_HERO_IMG, hero.urlImage)
         intent.putExtra(KEY_HERO_PRM_ATR, hero.primaryAttribute)
         intent.putExtra(KEY_HERO_ATTACK_TYPE, hero.attackType)
+        intent.putExtra(Constants.KEY_HERO_ARMOR, hero.baseArmor)
+        intent.putExtra(Constants.KEY_HERO_SPEED, hero.moveSpeed)
 
         var roles = ""
         for (role in hero.roles) {

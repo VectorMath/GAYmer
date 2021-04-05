@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D1CDDA"
+    android:background="@color/activity_background"
     tools:context=".ui.activities.MainActivity">
 
     <FrameLayout
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/purple_500"
+        app:itemBackground="@color/color_primary_dota"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:labelVisibilityMode="labeled"

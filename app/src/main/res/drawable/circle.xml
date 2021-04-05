@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:innerRadiusRatio="2"
     android:shape="ring"
-    android:thicknessRatio="1"
+    android:thicknessRatio="0"
     android:useLevel="false">
     <gradient
         android:type="radial"

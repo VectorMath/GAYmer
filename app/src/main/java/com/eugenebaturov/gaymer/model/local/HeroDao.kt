@@ -1,10 +1,7 @@
 package com.eugenebaturov.gaymer.model.local
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.eugenebaturov.gaymer.model.entities.LocalHero
 
 @Dao
@@ -16,7 +13,7 @@ interface HeroDao {
     @Query("SELECT * FROM heroes WHERE id=(:id)")
     fun getHeroById(id: Int): LiveData<LocalHero?>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addHero(hero: LocalHero)
 
     @Delete

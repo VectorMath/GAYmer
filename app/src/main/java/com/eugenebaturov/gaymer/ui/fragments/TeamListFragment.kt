@@ -59,8 +59,13 @@ class TeamListFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(TeamListViewModel::class.java)
 
-        viewModel.getTeams()
+        return view
+    }
 
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.getTeams()
         viewModel.myResponse.observe(this, Observer { response ->
             if (response.isSuccessful) {
                 val teams = response.body()!!
@@ -69,8 +74,6 @@ class TeamListFragment : Fragment() {
                 Log.e(Constants.TAG_RESPONSE, response.errorBody().toString())
             }
         })
-
-        return view
     }
 
     override fun onDetach() {

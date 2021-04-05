@@ -1,7 +1,9 @@
 package com.eugenebaturov.gaymer.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,6 +14,7 @@ import com.eugenebaturov.gaymer.DotaRepository
 import com.eugenebaturov.gaymer.R
 import com.eugenebaturov.gaymer.model.entities.LocalHero
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_AGI
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ARMOR
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ATTACK_TYPE
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_HEALTH_POINT
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ICON
@@ -25,6 +28,7 @@ import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_MIN_DAMAGE
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_NAME
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_PRM_ATR
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_ROLES
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_SPEED
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_STR
 import com.eugenebaturov.gaymer.utils.Constants.Companion.URL_FOR_PICASSO
 import com.eugenebaturov.gaymer.viewmodels.hero.HeroViewModel
@@ -47,6 +51,8 @@ class HeroActivity : AppCompatActivity() {
     private lateinit var strTextView: TextView
     private lateinit var agiTextView: TextView
     private lateinit var intTextView: TextView
+    private lateinit var armorTextView: TextView
+    private lateinit var speedTextView: TextView
     private lateinit var fabAdd: FloatingActionButton
     private lateinit var fabRemove: FloatingActionButton
 
@@ -64,6 +70,8 @@ class HeroActivity : AppCompatActivity() {
     private var str: Int = 0
     private var agi: Int = 0
     private var int: Int = 0
+    private var speed: Int = 0
+    private var armor: Double = 0.0
 
     private lateinit var viewModel: HeroViewModel
     private lateinit var viewModelFactory: HeroViewModelFactory
@@ -101,6 +109,8 @@ class HeroActivity : AppCompatActivity() {
         intTextView = findViewById(R.id.hero_int)
         fabAdd = findViewById(R.id.add_hero_to_favorite)
         fabRemove = findViewById(R.id.remove_hero_to_favorite)
+        armorTextView = findViewById(R.id.armor_count)
+        speedTextView = findViewById(R.id.speed_count)
     }
 
     private fun getInfoAboutHero() {
@@ -118,6 +128,8 @@ class HeroActivity : AppCompatActivity() {
         str = intent.getIntExtra(KEY_HERO_STR, 0)
         agi = intent.getIntExtra(KEY_HERO_AGI, 0)
         int = intent.getIntExtra(KEY_HERO_INT, 0)
+        armor = intent.getDoubleExtra(KEY_HERO_ARMOR, 1.5)
+        speed = intent.getIntExtra(KEY_HERO_SPEED, 280)
 
         health += 5 * str
         mana += 5 * int
@@ -137,15 +149,22 @@ class HeroActivity : AppCompatActivity() {
             intHero = int,
             urlImage = avatarURL,
             urlIcon = iconURL,
-            baseArmor = 2.5,
-            moveSpeed = 300
+            baseArmor = armor,
+            moveSpeed = speed
         )
     }
 
     private fun updateUI() {
         Picasso.get().load(URL_FOR_PICASSO + avatarURL).into(avatarImageView)
         nameTextView.text = name
-        prmAttrTextView.text = prmAttr
+        prmAttrTextView.text = prmAttr.toUpperCase()
+
+        when(prmAttr) {
+            "str" -> prmAttrTextView.setTextColor(resources.getColor(R.color.str_color))
+            "agi" -> prmAttrTextView.setTextColor(resources.getColor(R.color.agi_color))
+            "int" -> prmAttrTextView.setTextColor(resources.getColor(R.color.int_color))
+        }
+
         attackTypeTextView.text = attackType
         rolesTextView.text = roles
         minDamageTextView.text = minDamage.toString()
@@ -155,6 +174,8 @@ class HeroActivity : AppCompatActivity() {
         strTextView.text = str.toString()
         agiTextView.text = agi.toString()
         intTextView.text = int.toString()
+        speedTextView.text = speed.toString()
+        armorTextView.text = armor.toString()
     }
 
     private fun checkIsLocalDb() {
@@ -167,8 +188,8 @@ class HeroActivity : AppCompatActivity() {
     }
 
     fun addHero(view: View) {
-        viewModel.insert(hero)
-        Toast.makeText(this, "Hero was added!", Toast.LENGTH_SHORT).show()
+            viewModel.insert(hero)
+            Toast.makeText(this, "Hero was added!", Toast.LENGTH_SHORT).show()
     }
 
     fun removeHero(view: View) {

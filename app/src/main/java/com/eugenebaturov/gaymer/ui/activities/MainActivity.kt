@@ -31,14 +31,19 @@ class MainActivity : AppCompatActivity(), TeamListFragment.Callbacks {
 
         navMenu = findViewById(R.id.bottom_nav_menu)
 
+        setTitle(R.string.article_heroes)
+
         navMenu.apply {
 
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
-                    R.id.menu_heroes -> changeFragment(HeroListFragment.newInstance())
-                    R.id.menu_teams -> changeFragment(TeamListFragment.newInstance())
-                    R.id.menu_favorite -> changeFragment(FavoriteListFragment.newInstance())
-                    R.id.menu_about -> changeFragment(AboutFragment.newInstance())
+                    R.id.menu_heroes -> changeFragment(
+                        HeroListFragment.newInstance(),
+                        R.string.article_heroes
+                    )
+                    R.id.menu_teams -> changeFragment(TeamListFragment.newInstance(), R.string.article_teams)
+                    R.id.menu_favorite -> changeFragment(FavoriteListFragment.newInstance(), R.string.article_favorite)
+                    R.id.menu_about -> changeFragment(AboutFragment.newInstance(), R.string.article_about)
                 }
                 true
             }
@@ -62,10 +67,12 @@ class MainActivity : AppCompatActivity(), TeamListFragment.Callbacks {
         startActivity(intent)
     }
 
-    private fun changeFragment(fragment: Fragment) {
+    private fun changeFragment(fragment: Fragment, resTitle: Int) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.currentFragment, fragment)
             .commit()
+
+        setTitle(resTitle)
     }
 }

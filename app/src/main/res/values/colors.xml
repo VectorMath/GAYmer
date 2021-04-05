@@ -8,8 +8,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="hp_background">#BA2828</color>
-    <color name="hp_text">#CD8787</color>
-    <color name="mp_background">#284CBA</color>
-    <color name="mp_text">#87A1CD</color>
+    <color name="color_primary_dota">#C84940</color>
+    <color name="color_primary_variant_dota">#A63C35</color>
+
+    <color name="activity_background">#2E2E2E</color>
+    <color name="cardView_background">#404040</color>
+    <color name="simple_text_color">#9F9F9F</color>
+    <color name="fab_add_color">#FFC107</color>
+    <color name="fab_remove_color">#F44336</color>
+    <color name="str_color">#FB5B4F</color>
+    <color name="agi_color">#71FD77</color>
+    <color name="int_color">#74EFFF</color>
+
+    <color name="hp_background">#EC3D3D</color>
+    <color name="hp_text">#FFBEBE</color>
+    <color name="mp_background">#6589F8</color>
+    <color name="mp_text">#B7D2FF</color>
 </resources>

@@ -20,12 +20,14 @@ import com.eugenebaturov.gaymer.model.entities.LocalHero
 import com.eugenebaturov.gaymer.ui.activities.HeroActivity
 import com.eugenebaturov.gaymer.utils.Constants
 import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_LOCAL_DB
+import com.eugenebaturov.gaymer.utils.Constants.Companion.KEY_HERO_SPEED
 import com.eugenebaturov.gaymer.viewmodels.hero.HeroViewModel
 import com.eugenebaturov.gaymer.viewmodels.hero.HeroViewModelFactory
 import com.squareup.picasso.Picasso
 
 class FavoriteListFragment: Fragment() {
 
+    private lateinit var emptyRecView: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: HeroAdapter
 
@@ -41,6 +43,7 @@ class FavoriteListFragment: Fragment() {
             .inflate(R.layout.fragment_hero_list_favorite, container, false)
 
         recyclerView = view.findViewById(R.id.recyclerView_heroList)
+        emptyRecView = view.findViewById(R.id.rv_empty)
 
         val repository = DotaRepository.get()
         viewModelFactory = HeroViewModelFactory(repository)
@@ -130,10 +133,16 @@ class FavoriteListFragment: Fragment() {
     }
 
     private fun setAdapter(heroes: List<LocalHero>) {
-        adapter = HeroAdapter(heroes)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.hasFixedSize()
-        recyclerView.adapter = adapter
+        if (heroes.size != 0) {
+            emptyRecView.visibility = View.GONE
+            adapter = HeroAdapter(heroes)
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.hasFixedSize()
+            recyclerView.adapter = adapter
+        } else {
+            emptyRecView.visibility = View.VISIBLE
+        }
+
     }
 
     private fun putHeroExtras(intent: Intent, hero: LocalHero) {
@@ -141,6 +150,8 @@ class FavoriteListFragment: Fragment() {
         intent.putExtra(Constants.KEY_HERO_NAME, hero.name)
         intent.putExtra(Constants.KEY_HERO_ICON, hero.urlIcon)
         intent.putExtra(Constants.KEY_HERO_IMG, hero.urlImage)
+        intent.putExtra(Constants.KEY_HERO_ARMOR, hero.baseArmor)
+        intent.putExtra(KEY_HERO_SPEED, hero.moveSpeed)
         intent.putExtra(Constants.KEY_HERO_PRM_ATR, hero.primaryAttribute)
         intent.putExtra(Constants.KEY_HERO_ATTACK_TYPE, hero.attackType)
         intent.putExtra(Constants.KEY_HERO_ROLES, hero.roles)

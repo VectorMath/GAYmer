@@ -24,4 +24,10 @@
     <string name="wins">Wins</string>
     <string name="unknown_team">Unknown Team</string>
     <string name="damage">Damage</string>
+    <string name="your_favorite_list_is_empty">Your favorite list is empty.</string>
+
+    <string name="article_heroes">Heroes</string>
+    <string name="article_teams">Teams</string>
+    <string name="article_favorite">Favorite hero</string>
+    <string name="article_about">About</string>
 </resources>
