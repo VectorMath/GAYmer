@@ -1,27 +1,26 @@
 # GAYmer
 
 ## Оглавление
-- [GAYmer](#gaymer)
-  - [Оглавление](#оглавление)
-  - [<a name="description">Описание проекта</a>](#описание-проекта)
+
+  - [Описание проекта](#описание-проекта)
     - [Что использовалось при разработке](#что-использовалось-при-разработке)
-  - [<a name="patterns">Паттерны</a>](#паттерны)
-    - [<a name="mvvm">MVVVM</a>](#mvvvm)
-      - [<a name="model">Model</a>](#model)
-        - [<a name="api">api</a>](#api)
-        - [<a name="local">local</a>](#local)
-        - [<a name="entities">entities</a>](#entities)
-      - [<a name="view">View</a>](#view)
-        - [<a name="activities">activities</a>](#activities)
-        - [<a name="fragments">fragments</a>](#fragments)
-      - [<a name="viewmodel">ViewModel</a>](#viewmodel)
-    - [<a name="singletone">Singletone</a>](#singletone)
-  - [<a name="constants">Константы (package utils)</a>](#константы-package-utils)
-  - [<a name="screenshots">Скриншоты приложения</a>](#скриншоты-приложения)
+  - [Паттерны](#паттерны)
+    - [MVVVM](#mvvvm)
+      - [Model](#model)
+        - [api](#api)
+        - [local](#local)
+        - [entities](#entities)
+      - [View](#view)
+        - [activities](#activities)
+        - [fragments](#fragments)
+      - [ViewModel](#viewmodel)
+    - [Singletone](#singletone)
+  - [Константы (package utils)](#константы-package-utils)
+  - [Скриншоты приложения](#скриншоты-приложения)
 
 ------------
 
-## <a name="description">Описание проекта</a>
+## Описание проекта
 
 **GAYmer** - это мобильное приложение по игре Dota 2, которая основана на OpenDotaAPI, способной брать информацию о всех героях и киберспортивных командах по данной дисциплине.
 
@@ -52,11 +51,11 @@
   
 ------------
 
-## <a name="patterns">Паттерны</a>
+## Паттерны
 
 При создание приложения использовались паттерны проектирования **MVVM** (Model-View-ViewModel) и **Singletone**.
 
-### <a name="mvvm">MVVVM</a>
+### MVVVM
 В MVVM была реализовано большая часть работы над приложением:
 - **Model** - реализует всю бизнес-логику приложения.
 - **View** - Отображает весь UI на экране пользователя.
@@ -69,7 +68,7 @@
 
 ------------
 
-#### <a name="model">Model</a>
+#### Model
 
 Данный модуль отвечает за бизнес-логику, а именно получения данных с HTTP, с помощью API **OpenDotaAPI** и манипуляциями полученными данными в локальной базе данных SQLite с помощью библиотеки **Room**
 
@@ -78,7 +77,7 @@
 - **local**
 - **entities**
 
-##### <a name="api">api</a>
+##### api
 
 Пакет отвечающий за работу с HTTP, с помощью библиотеки Retrofit2. 
 
@@ -135,7 +134,7 @@ object RetrofitInstance {
 }
 ```
 
-##### <a name="local">local</a>
+##### local
 
 Пакет отвечающий за работу с локальной базой данных, с помощью библиотеки Room. 
 
@@ -172,7 +171,7 @@ abstract class HeroDatabase: RoomDatabase() {
 }
 ```
 
-##### <a name="entities">entities</a>
+##### entities
 
 Пакет entities хранит в себе сущности(они же data-классы), которые используются в пакетах api и local
 
@@ -313,14 +312,14 @@ data class LocalHero(
 ------------
 
 
-#### <a name="view">View</a>
+#### View
 
 
 **Примечание:** Приложение выполняет всю техническую составляющию, которую я хотел реализовать, однако полный рефакторинг кода ещё не произведён. Например, вы можете увидеть, что data binding не был использован, это не говорит о том, что я не знаю, как его сделать, в дальнейшем я введу его. Тоже самое можно сказать и об адаптарах героев, которые в целом похожи лишь немногим отличаются, в дальнейшем я всё это исправлю. Однако есть момент с передачей данных героя HeroListFragment в HeroActivity, который осуществляется через интент, по другому сделать было невозможно, т.к ручки с конкретным героем нет.
 
 Модуль, отвечающий за отображение изображений и данных на экране пользователя. Весь модуль реализован в пакете **ui**, который в свою очередь хранит пакет **activities** и пакет **fragments**.
 
-##### <a name="activities">activities</a>
+##### activities
 
 Данный пакет хранит в себе все активити приложения.
 
@@ -633,7 +632,7 @@ class HeroActivity : AppCompatActivity() {
 }
 ```
 
-##### <a name="fragments">fragments</a>
+##### fragments
 
 Фрагменты используются для отображения такой информации как:
 - Список всех персонажей (HeroListFragment.kt)
@@ -997,7 +996,7 @@ class HeroListFragment : Fragment() {
 
 ------------
 
-#### <a name="viewmodel">ViewModel</a>
+#### ViewModel
 
 Данный модуль как говорилось ранее, является посредником между View и Model, если говорить простыми словами, этот модуль сообщает View какие данные должны быть отрисованы.
 
@@ -1109,7 +1108,7 @@ class TeamListViewModelFactory(
 
 ------------
 
-### <a name="singletone">Singletone</a>
+### Singletone
 
 Паттерн Одиночка(он же Singletone) используется для репозитория, чтобы в приложение находился ЛИШЬ ОДИН экхемпляр класса **DotaRepository**. 
 
@@ -1188,7 +1187,7 @@ class GAYmerApp: Application() {
 
 ------------
 
-## <a name="constants">Константы (package utils)</a>
+## Константы (package utils)
 
 Здесь представлен класс Constants, который хранит в себе констатны значений такие как базовый url, название тегов, название ключей при передаче аргументов и тд.
 
@@ -1234,7 +1233,7 @@ class Constants {
 
 ------------
 
-## <a name="screenshots">Скриншоты приложения</a>
+## Скриншоты приложения
 
 ![fragment_hero_list](/docs/hero_list.jpg)
 ![current_hero](/docs/current_hero_from_hero_list.jpg)
